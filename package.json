@@ -1,6 +1,7 @@
 {
   "name": "react-app",
   "version": "0.1.0",
+  "homepage": "https://gitname.github.io/salesTable",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.0",
@@ -37,5 +38,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "install": "^0.13.0",
+    "npm": "^10.8.2"
   }
 }

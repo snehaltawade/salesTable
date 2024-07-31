@@ -57,44 +57,38 @@ const SalesTable = () => {
 
   const handleAllocationPercentage = (name) => {
     let inputvalue = inputValues[name].inputValue;
-    setInputalues({
-      ...inputValues,
+    let name2 = "";
+    let newValue;
+    let updateValue = calculateVariancebypercent(
+      inputValues[name].value,
+      inputvalue
+    );
+
+    setInputalues((prevData) => ({
+      ...prevData,
       [name]: {
         inputValue: inputvalue,
-        value: calculateVariancebypercent(inputValues[name].value, inputvalue),
+        value: updateValue,
         variance: inputvalue,
       },
-    });
-    if (name === "--Tables" || name === "--Chairs") {
-      setInputalues((prevData) => ({
-        ...prevData,
-        Furniture: {
-          ...prevData[name],
-          value: inputValues["--Tables"].value + inputValues["--Chairs"].value,
-          variance:
-            ((inputValues["--Tables"].value +
-              inputValues["--Chairs"].value -
-              inputValues["Furniture"].value) /
-              inputValues["Furniture"].value) *
-            100,
-        },
-      }));
-    }
+    }));
+
     if (name === "--Phones" || name === "--Laptops") {
-      setInputalues((prevData) => ({
-        ...prevData,
-        Electronics: {
-          ...prevData[name],
-          value: inputValues["--Phones"].value + inputValues["--Laptops"].value,
-          variance:
-            ((inputValues["--Phones"].value +
-              inputValues["--Laptops"].value -
-              inputValues["Electronics"].value) /
-              inputValues["Electronics"].value) *
-            100,
-        },
-      }));
+      name2 = "Electronics";
+    } else if (name === "--Tables" || name === "--Chairs") {
+      name2 = "Furniture";
     }
+    newValue = inputValues[name2].value + updateValue - inputValues[name].value;
+    setInputalues((prevData) => ({
+      ...prevData,
+      [name2]: {
+        ...prevData[name2],
+        value: newValue,
+        variance:
+          ((newValue - inputValues[name2].value) / inputValues[name2].value) *
+          100,
+      },
+    }));
   };
 
   const handleAllocationValues = (name) => {
@@ -168,7 +162,7 @@ const SalesTable = () => {
                 </Button>
               </TableCell>
               <TableCell align="right">
-                {inputValues[row.name]?.variance}
+                {Number(inputValues[row.name]?.variance).toFixed(2)}%
               </TableCell>
             </TableRow>
           ))}

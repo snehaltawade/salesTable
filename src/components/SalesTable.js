@@ -65,10 +65,41 @@ const SalesTable = () => {
         variance: inputvalue,
       },
     });
+    if (name === "--Tables" || name === "--Chairs") {
+      setInputalues((prevData) => ({
+        ...prevData,
+        Furniture: {
+          ...prevData[name],
+          value: inputValues["--Tables"].value + inputValues["--Chairs"].value,
+          variance:
+            ((inputValues["--Tables"].value +
+              inputValues["--Chairs"].value -
+              inputValues["Furniture"].value) /
+              inputValues["Furniture"].value) *
+            100,
+        },
+      }));
+    }
+    if (name === "--Phones" || name === "--Laptops") {
+      setInputalues((prevData) => ({
+        ...prevData,
+        Electronics: {
+          ...prevData[name],
+          value: inputValues["--Phones"].value + inputValues["--Laptops"].value,
+          variance:
+            ((inputValues["--Phones"].value +
+              inputValues["--Laptops"].value -
+              inputValues["Electronics"].value) /
+              inputValues["Electronics"].value) *
+            100,
+        },
+      }));
+    }
   };
 
   const handleAllocationValues = (name) => {
     let inputvalue = inputValues[name].inputValue;
+    console.log("name", name);
     setInputalues((prevData) => ({
       ...prevData,
       [name]: {

@@ -93,6 +93,7 @@ const SalesTable = () => {
 
   const handleAllocationValues = (name) => {
     let inputvalue = inputValues[name].inputValue;
+    let name2 = "";
     console.log("name", name);
     setInputalues((prevData) => ({
       ...prevData,
@@ -103,6 +104,24 @@ const SalesTable = () => {
           inputValues[name].value,
           inputvalue
         ),
+      },
+    }));
+    if (name === "--Phones" || name === "--Laptops") {
+      name2 = "Electronics";
+    } else if (name === "--Tables" || name === "--Chairs") {
+      name2 = "Furniture";
+    }
+    setInputalues((prevData) => ({
+      ...prevData,
+      [name2]: {
+        ...prevData[name2],
+        value:
+          inputValues[name2].value +
+          (inputValues[name].inputValue - inputValues[name].value),
+        variance:
+          ((inputValues[name].inputValue - inputValues[name].value) /
+            inputValues[name2].value) *
+          100,
       },
     }));
   };
